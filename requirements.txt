@@ -1,3 +1,4 @@
 xlsxwriter==1.0.5
 mxnet==1.2.0
 librosa==0.6.1
+xlrd==1.1.0
