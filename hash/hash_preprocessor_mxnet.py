@@ -11,11 +11,11 @@ import mxnet as mx
 import numpy as np
 from mxnet import gluon
 
-from root_dir import ROOT_DIR
-
 p = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 if p not in sys.path:
     sys.path.append(p)
+
+from root_dir import ROOT_DIR
 
 
 class HashPreProcessor(object):
