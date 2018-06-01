@@ -112,8 +112,8 @@ def mp_data_merger(data_dir, out_dir, n_prc=40):
             print "\t[INFO] count %s" % count
     print "\t[INFO] count %s" % count
 
-    print(l_list)
-    print(n_list)
+    # print(l_list)
+    # print(n_list)
     np.savez(out_dir, f_list=f_list, l_list=l_list, n_list=n_list)
     res_data = np.load(out_dir)
     print "[INFO] 最终数据: %s %s, %s %s, %s %s" % (

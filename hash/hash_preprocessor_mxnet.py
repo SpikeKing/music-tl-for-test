@@ -22,7 +22,7 @@ class HashPreProcessor(object):
     def __init__(self):
         self.model = None
         self.data_dir = os.path.join(ROOT_DIR, 'data')
-        self.gpu = True
+        self.gpu = False
         pass
 
     def process(self):
@@ -37,43 +37,14 @@ class HashPreProcessor(object):
         self.model = gluon.nn.SymbolBlock(outputs=mx.sym.load(sym), inputs=mx.sym.var('data'))
         self.model.load_params(params, ctx=ctx)
 
-        file_name = 'data_train_v2.npz'
-        data_path = os.path.join(ROOT_DIR, 'experiments', file_name)
+        file_name = 'data_all.npz'
+        data_path = os.path.join(ROOT_DIR, 'data', file_name)
         data_all = np.load(data_path)
-        X_test1 = data_all['f_list']
-        l_list1 = data_all['l_list']
-        n_list1 = data_all['n_list']
-
-        print('[INFO] X_test1.shape: ' + str(X_test1.shape))
-        print('[INFO] l_list1.shape: ' + str(l_list1.shape))
-        print('[INFO] n_list1.shape: ' + str(n_list1.shape))
-
-        file_name = 'data_test_v2.npz'
-        data_path = os.path.join(ROOT_DIR, 'experiments', file_name)
-        data_all = np.load(data_path)
-        X_test2 = data_all['f_list']
-        l_list2 = data_all['l_list']
-        n_list2 = data_all['n_list']
-        print('[INFO] X_test2.shape: ' + str(X_test2.shape))
-
-        X_test = np.concatenate((X_test1, X_test2), axis=0)
-        l_list = np.concatenate((l_list1, l_list2), axis=0)
-        n_list = np.concatenate((n_list1, n_list2), axis=0)
+        X_test = data_all['f_list']
+        l_list = data_all['l_list']
+        n_list = data_all['n_list']
 
         print('[INFO] X_test.shape: ' + str(X_test.shape))
-
-        def split_num(name):
-            name = str(name)
-            return len(name.split('.'))  # 长度为2的音频是原始音频
-
-        # 获取原始音频的索引
-        n_list_r = np.reshape(n_list, (-1, 1))
-        n_list_num = np.apply_along_axis(split_num, axis=1, arr=n_list_r)
-        o_indexes = np.where(n_list_num == 2, True, False)  # 原始音频的索引
-
-        n_list = n_list[o_indexes]
-        l_list = l_list[o_indexes]
-        X_test = X_test[o_indexes]
 
         print('[INFO] 转换数量: %s' % n_list.shape[0])
 
@@ -91,7 +62,7 @@ class HashPreProcessor(object):
         oz_bin = np.apply_along_axis(self.to_binary, axis=1, arr=oz_arr)
         print('[INFO] oz_bin: %s' % oz_bin[0])
 
-        out_path = os.path.join(ROOT_DIR, 'experiments', 'data_v2.bin.mx.npz')
+        out_path = os.path.join(ROOT_DIR, 'data', 'data_all.bin.mx.npz')
         np.savez(out_path, b_list=oz_bin, l_list=l_list, n_list=n_list)
 
         print('[INFO] 输出示例: %s %s %s' % (str(oz_bin.shape), bin(oz_bin[0]), oz_bin[0]))
