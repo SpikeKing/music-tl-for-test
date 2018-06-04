@@ -27,9 +27,7 @@ class DistanceApi(object):
     def __init__(self):
         self.model = None
         self.data_dir = os.path.join(ROOT_DIR, 'data')
-
         self.b_list, self.l_list, self.n_list = self.load_data()
-
         pass
 
     def load_data(self):
@@ -154,32 +152,6 @@ def test_of_acc():
         print('-' * 50)
     print('总数: %s' % n_all)
     print('错误: %s' % n_error)
-
-    # label_num_dict = collections.defaultdict(int)
-    # name_label_dict = dict()
-    # for label, name in zip(da.l_list, da.n_list):
-    #     label_num_dict[label] += 1
-    #     name_label_dict[name] = label
-    #
-    # n_error = 0
-    # n_all = 0
-    # for label, name in zip(da.l_list, da.n_list):
-    #     n_same = label_num_dict[label]
-    #     rb_list, rn_list = da.distance(name)
-    #     l_same = rn_list[slice(n_same)]
-    #     for sl in l_same:
-    #         if sl != label:
-    #             n_error += 1  # 写入文档
-    #         else:
-    #             n_all += 1
-    #
-    # print('[INFO] 错误: %s' % n_error)
-    # print('[INFO] 整体: %s' % n_error)
-    # audio_name = '924643775'
-    # print('[INFO] 目标音频: %s' % audio_name)
-    # rb_list, rn_list = da.distance(audio_name)
-    # print('[INFO] 距离: %s' % rb_list)
-    # print('[INFO] 相似: %s' % rn_list)
 
 
 def test_of_distance():
