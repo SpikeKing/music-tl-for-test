@@ -7,7 +7,6 @@ Created by C. L. Wang on 2018/5/8
 
 import os
 import sys
-import collections
 from datetime import datetime
 
 import librosa
@@ -15,13 +14,13 @@ import mxnet as mx
 import numpy as np
 from mxnet import gluon
 
-from data_preprocessor import get_feature
-from root_dir import ROOT_DIR
-from utils import sort_two_list
-
 p = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 if p not in sys.path:
     sys.path.append(p)
+
+from data_preprocessor import get_feature
+from root_dir import ROOT_DIR
+from utils import sort_two_list
 
 
 class DistanceApi(object):
